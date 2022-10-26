@@ -1,0 +1,32 @@
+<launch>
+
+
+    <include file="$(find farmbeast_simulation)/launch/robot_publisher.launch"/>
+
+    <!-- Robot pose -->
+    <arg name="x" default="-4"/>
+    <arg name="y" default="0"/>
+    <arg name="z" default="0.5"/>
+    <arg name="roll" default="0"/>
+    <arg name="pitch" default="0"/>
+    <arg name="yaw" default="0"/>
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <!--<arg name="world_name" value="$(find simulation)/worlds/warehouse.world"/>-->
+    </include>
+    
+    <node name="spawn_robot" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model bot -x $(arg x) -y $(arg y) -z $(arg z)
+                -R $(arg roll) -P $(arg pitch) -Y $(arg yaw)"/>
+    <!-- load the controllers -->
+    <rosparam file="$(find farmbeast_simulation)/config/robot.yaml" command="load"/>
+    <node name="controller_spawner" pkg ="controller_manager" type="spawner" ns="/farmbeast" args="front/left/z_axis
+                                                                                                    front/left/wheel 
+                                                                                                    front/right/z_axis
+                                                                                                    front/right/wheel 
+                                                                                                    back/left/z_axis
+                                                                                                    back/left/wheel 
+                                                                                                    back/right/z_axis
+                                                                                                    back/right/wheel  
+                                                                                                    joint_state_controller"/>
+
+</launch>

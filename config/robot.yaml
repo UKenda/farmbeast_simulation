@@ -1,0 +1,37 @@
+farmbeast:
+  joint_state_controller:
+      type: joint_state_controller/JointStateController
+      publish_rate: 20
+
+  front:
+      left:
+          z_axis:
+              type: position_controllers/JointPositionController
+              joint: left_front_z_axis_joint 
+          wheel:
+              type: velocity_controllers/JointVelocityController
+              joint: left_front_wheel_joint
+      right:
+          z_axis:
+              type: position_controllers/JointPositionController
+              joint: right_front_z_axis_joint
+          wheel:
+              type: velocity_controllers/JointVelocityController
+              joint: right_front_wheel_joint
+
+  back:
+      left:
+          z_axis:
+              type: position_controllers/JointPositionController
+              joint: left_back_z_axis_joint
+          wheel:
+              type: velocity_controllers/JointVelocityController
+              joint: left_back_wheel_joint
+
+      right: 
+          z_axis:
+              type: position_controllers/JointPositionController
+              joint: right_back_z_axis_joint
+          wheel:
+              type: velocity_controllers/JointVelocityController
+              joint: right_back_wheel_joint
