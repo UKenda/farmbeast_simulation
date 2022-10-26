@@ -49,7 +49,7 @@
                 <box size="0.5 0.5 0.3"/>
             </geometry>
         </collision>
-        <xacro:inertial_box mass="1" x="0.5" y="0.5" z="0.3">
+        <xacro:inertial_box mass="2" x="0.5" y="0.5" z="0.3">
             <origin xyz="0 0 0" rpy="0 0 0"/>
         </xacro:inertial_box>
     </link>
@@ -93,6 +93,9 @@
       </actuator>
     </transmission>
 
+    <gazebo reference="left_front_z_axis">
+        <material>Gazebo/Orange</material>
+    </gazebo>
     <!-- left front wheel -->
 
     <joint name="left_front_wheel_joint" type="continuous">
@@ -129,12 +132,13 @@
       </actuator>
     </transmission>
 
-    <gazebo reference="left_wheel">
+    <gazebo reference="left_front_wheel">
         <material>Gazebo/Blue</material>
+        <mu1 value="200"/>
+        <mu2 value="100"/>
     </gazebo>
 
-
-<!-- Left back z axis -->
+    <!-- Left back z axis -->
     <joint name="left_back_z_axis_joint" type="revolute">
         <parent link="base_link"/>
         <child link="left_back_z_axis"/>
@@ -168,6 +172,10 @@
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
     </transmission>
+
+    <gazebo reference="left_back_z_axis">
+        <material>Gazebo/Orange</material>
+    </gazebo>
 
     <!-- left back wheel -->
 
@@ -204,8 +212,11 @@
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
     </transmission>
-    <gazebo reference="left_wheel">
+    
+    <gazebo reference="left_back_wheel">
         <material>Gazebo/Blue</material>
+        <mu1 value="200"/>
+        <mu2 value="100"/>
     </gazebo>
 
 
@@ -243,6 +254,11 @@
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
     </transmission>    
+
+    <gazebo reference="right_front_z_axis">
+        <material>Gazebo/Orange</material>
+    </gazebo>
+
     <!-- right front wheel -->
 
     <joint name="right_front_wheel_joint" type="continuous">
@@ -279,12 +295,13 @@
       </actuator>
     </transmission>
 
-    <gazebo reference="right_wheel">
+    <gazebo reference="right_front_wheel">
         <material>Gazebo/Blue</material>
+        <mu1 value="200"/>
+        <mu2 value="100"/>
     </gazebo>
 
-
-<!-- right back z axis -->
+    <!-- right back z axis -->
     <joint name="right_back_z_axis_joint" type="revolute">
         <parent link="base_link"/>
         <child link="right_back_z_axis"/>
@@ -318,6 +335,10 @@
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
     </transmission>
+
+    <gazebo reference="right_back_z_axis">
+        <material>Gazebo/Orange</material>
+    </gazebo>
 
     <!-- right back wheel -->
 
@@ -355,15 +376,28 @@
       </actuator>
     </transmission>
 
-    <gazebo reference="right_wheel">
+    <gazebo reference="right_back_wheel">
         <material>Gazebo/Blue</material>
+        <mu1 value="200"/>
+        <mu2 value="100"/>
     </gazebo>
+
     <!-- ROS cotntroll-->
     <gazebo>
         <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
             <robotNamespace>/farmbeast</robotNamespace>
         </plugin>
     </gazebo>
+
+    <!--Velodyne include-->
+    <xacro:arg name="gpu" default="false"/>
+    <xacro:property name="gpu" value="$(arg gpu)" />
+    <xacro:arg name="organize_cloud" default="false"/>
+    <xacro:property name="organize_cloud" value="$(arg organize_cloud)" />
+    <xacro:include filename="$(find velodyne_description)/urdf/VLP-16.urdf.xacro"/>
+    <xacro:VLP-16 parent="base_link" name="velodyne" topic="/velodyne_points" organize_cloud="${organize_cloud}" hz="10" samples="440" gpu="${gpu}" min_range="0.1" max_range="10.0" >
+        <origin xyz="0.25 0 0.3" rpy="0 0.5 0" />
+     </xacro:VLP-16>
 
 
 </robot>

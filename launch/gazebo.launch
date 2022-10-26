@@ -12,7 +12,8 @@
     <arg name="yaw" default="0"/>
 
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <!--<arg name="world_name" value="$(find simulation)/worlds/warehouse.world"/>-->
+        <arg name="use_sim_time" value="true"/>
+        <arg name="world_name" value="$(find farmbeast_simulation)/world/example.world"/>
     </include>
     
     <node name="spawn_robot" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model bot -x $(arg x) -y $(arg y) -z $(arg z)

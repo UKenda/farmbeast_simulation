@@ -6,6 +6,7 @@
         <param name="robot_description" command="$(find xacro)/xacro --inorder $(find farmbeast_simulation)/urdf/robot.urdf.xacro" />
         <!-- Running nodes -->
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"> 
+        <param name="publish_frequency" type="double" value="30.0" />
         <remap from="/joint_states" to="/farmbeast/joint_states" />
         </node>
         <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />

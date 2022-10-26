@@ -41,20 +41,38 @@ int main(int argc, char **argv)
   ros::Rate r(10);
 
   while(ros::ok()){
-    std_msgs::Float64 speed;
-    std_msgs::Float64 turn;
-    speed.data=twist_msg.linear.x*10; 
-    turn.data=twist_msg.angular.z*0.5;
+    std_msgs::Float64 speed, speed_left, speed_right;
+    std_msgs::Float64 turn_front, turn_back;
+    speed.data=(twist_msg.linear.x)*10; 
+    turn_front.data=twist_msg.angular.z*0.5;
+    turn_back.data=-twist_msg.angular.z*0.5;
 
-    front_left_z_axis_pub.publish(turn);
-    front_right_z_axis_pub.publish(turn);
-    back_left_z_axis_pub.publish(turn);
-    back_right_z_axis_pub.publish(turn);
+    if(twist_msg.linear.x == 0 && twist_msg.angular.z != 0){
 
-    front_left_wheel_pub.publish(speed);
-    front_right_wheel_pub.publish(speed);
-    back_left_wheel_pub.publish(speed);
-    back_right_wheel_pub.publish(speed);
+      turn_front.data=0.5;
+      turn_back.data=-0.5;
+      speed_left.data = -twist_msg.angular.z*5;
+      speed_right.data = twist_msg.angular.z*5;
+      front_left_z_axis_pub.publish(turn_back);
+      front_right_z_axis_pub.publish(turn_front);
+      back_left_z_axis_pub.publish(turn_front);
+      back_right_z_axis_pub.publish(turn_back);
+      front_left_wheel_pub.publish(speed_left);
+      front_right_wheel_pub.publish(speed_right);
+      back_left_wheel_pub.publish(speed_left);
+      back_right_wheel_pub.publish(speed_right);
+    }
+    else{
+      front_left_z_axis_pub.publish(turn_front);
+      front_right_z_axis_pub.publish(turn_front);
+      back_left_z_axis_pub.publish(turn_back);
+      back_right_z_axis_pub.publish(turn_back);
+
+      front_left_wheel_pub.publish(speed);
+      front_right_wheel_pub.publish(speed);
+      back_left_wheel_pub.publish(speed);
+      back_right_wheel_pub.publish(speed);
+    }
     ros::spinOnce();
     r.sleep();
   }
