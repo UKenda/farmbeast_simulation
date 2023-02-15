@@ -22,6 +22,7 @@ rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 ```
 sudo apt-get install ros-noetic-velodyne-description ros-noetic-velodyne-gazebo-plugins
 sudo apt-get install ros-noetic-joint-trajectory-controller
+sudo apt-get install ros-noetic-pointcloud-to-laserscan
 ```
 ## Following work
 Nedded to change controll.cpp to allow ackermann or any type of driving.
