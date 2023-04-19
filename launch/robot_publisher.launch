@@ -11,5 +11,7 @@
         </node>
         <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
         <node type="rviz" name="rviz" pkg="rviz" args="-d $(arg rviz_config)" />
+        <node type="cmd_vel_control" name="cmd_vel_control" pkg="farmbeast_simulation" />
+        <node type="teleop_twist_keyboard.py" name="teleop_twist_keyboard" pkg="teleop_twist_keyboard" output="screen"/>
 
 </launch>

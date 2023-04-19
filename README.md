@@ -23,14 +23,8 @@ To run simulation gazebo and rviz:
 ```
 roslaunch farmbeast_simulation gazebo.launch
 ```
-For running ros control:
-```
-rosrun farmbeast_simulation cmd_vel_control
-```
-To drive with keyboard:
-```
-rosrun teleop_twist_keyboard teleop_twist_keyboard.py
-```
+
+
 ## Following work
 Nedded to change controll.cpp to allow ackermann or any type of driving.
 
