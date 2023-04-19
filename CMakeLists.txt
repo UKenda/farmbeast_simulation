@@ -15,7 +15,13 @@ catkin_package(
 ###########
 
 include_directories(
- include ${catkin_INCLUDE_DIRS}
+ include 
+ ${catkin_INCLUDE_DIRS}
 )
 add_executable(cmd_vel_control src/control.cpp)
 target_link_libraries(cmd_vel_control ${catkin_LIBRARIES})
+
+install(DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  FILES_MATCHING PATTERN "*.h"
+)
